@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react'
-import { StyleSheet, Text, useWindowDimensions, View } from 'react-native'
+import { StyleSheet, Text, useWindowDimensions, View, Keyboard, KeyboardTypeOptions } from 'react-native';
 import { SECONDARY_COLOR } from '../commons/constants';
 import { InputComponent } from './InputComponent';
 
@@ -19,7 +19,6 @@ export const BodyComponent = ({ children }: Props) => {
             height: height * 0.88
         }}>
             {children}
-            <InputComponent/>
         </View>
     )
 }
@@ -31,5 +30,5 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 30,
         paddingHorizontal: 40,
         paddingTop: 30
-    }
+    },
 });

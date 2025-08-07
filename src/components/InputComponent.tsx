@@ -19,7 +19,7 @@ export const InputComponent = ({ placeholder, KeyboardType, isPassword, changeFo
             style={styles.inputText}
             placeholder={placeholder}
             keyboardType={KeyboardType}
-            secureTextEntry= {true}
+            secureTextEntry= {isPassword}
             onChangeText={(value) => changeForm(property, value)}
         >
         </TextInput>

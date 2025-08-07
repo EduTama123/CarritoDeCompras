@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react'
-import { StyleSheet, Text, useWindowDimensions, View, Keyboard, KeyboardTypeOptions } from 'react-native';
+import { StyleSheet, useWindowDimensions, View, Keyboard, KeyboardTypeOptions } from 'react-native';
 import { SECONDARY_COLOR } from '../commons/constants';
-import { InputComponent } from './InputComponent';
+
 
 //componente reutilizable
 interface Props {
@@ -16,7 +16,7 @@ export const BodyComponent = ({ children }: Props) => {
     return (
         <View style={{
             ...styles.container,
-            height: height * 0.88
+            height: height * 0.95
         }}>
             {children}
         </View>

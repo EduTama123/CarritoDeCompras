@@ -1,11 +1,11 @@
 import { StyleSheet } from "react-native";
+import { PRIMARY_COLOR } from "../commons/constants";
 
 export const styles = StyleSheet.create({
     titleWelcome: {
-        fontSize: 20,
+        fontSize: 25,
         fontWeight: 'bold',
         color: 'black',
-        alignSelf: 'center'
     },
     textDescription: {
         fontSize: 15,
@@ -13,9 +13,21 @@ export const styles = StyleSheet.create({
         paddingVertical: 10
     },
     containerForm: {
-        marginVertical: 10
+        marginVertical: 5
     },
     margenTexto: {
         marginBottom: 5
+    },
+    iconForm:{
+        position: 'absolute',
+        bottom:26,
+        right: 6
+    },
+    textRedirect:{
+        fontSize: 15,
+        fontWeight: 'bold',
+        color: PRIMARY_COLOR,
+        textAlign: 'center',
+        paddingVertical: 12
     }
 });

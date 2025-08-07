@@ -3,8 +3,8 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { SECONDARY_COLOR, TERTIARY_COLOR } from '../commons/constants'
 
 
-//componente reutuliable
-interface Props {    //recibe propiedades de los componentes
+//componente reutulizable
+interface Props {    //recibe valores para las propiedades de los componentes
     text: string;
     handleLogin: ()=> void;
 }

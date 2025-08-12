@@ -3,7 +3,7 @@ import { LoginScreen } from '../screens/LoginScreen';
 import { PRIMARY_COLOR } from '../commons/constants';
 import { RegistrerScreen } from '../screens/RegistrerScreen';
 import { use, useState } from 'react';
-import { HomeScreen } from '../screens/HomeScreen';
+import { HomeScreen } from '../screens/HomeScreen/HomeScreen';
 
 //interface para los objetos de mi arreglo users
 export interface User {

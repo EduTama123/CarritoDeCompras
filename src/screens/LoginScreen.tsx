@@ -8,6 +8,13 @@ import { InputComponent } from '../components/InputComponent'
 import { ButtonComponent } from '../components/ButtonComponent'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { CommonActions, useNavigation } from '@react-navigation/native'
+import { User } from '../navigator/StackNavigator'
+
+//interface para las propiedades
+interface Props{
+  users: User[]; //arreglos con la lista de usuarios
+}
+
 
 //interface para el objeto del formulario
 interface FormLogin {
@@ -16,21 +23,9 @@ interface FormLogin {
 }
 
 
-//interface para los objetos de mi arreglo users
-interface User {
-  id: number;
-  name: string;
-  username: string;
-  password: string;
-}
 
-//arreglo con la lista de usuarios
-const users: User[] = [
-  { id: 1, name: 'Eduardo Tamayo', username: 'Tamayo', password: '123' },
-  { id: 2, name: 'Erick Rodriguez', username: 'Erick', password: '12345' }
-];
 
-export const LoginScreen = () => {
+export const LoginScreen = ({users}: Props) => {
   //hook useState para manejar el estado del formulario
   const [formLogin, setformLogin] = useState<FormLogin>({
     username: '',
@@ -68,7 +63,8 @@ export const LoginScreen = () => {
       Alert.alert('Error', 'Usuario y/o contraseña incorrectos');
       return; //El retur impide que se ejecuten las demas lineas de codigo
     }
-    console.log(formLogin);
+    //console.log(formLogin);
+    navigation.dispatch(CommonActions.navigate({name : 'Home'}))
   }
 
   return (
@@ -94,7 +90,7 @@ export const LoginScreen = () => {
             style={styles.iconForm}
             onPress={() => sethiddenPassword(!hiddenPassword)} />
         </View>
-        <ButtonComponent text='Enviar' handleLogin={handleLogin} />
+        <ButtonComponent text='Enviar' onPress={handleLogin} />
         <TouchableOpacity
         onPress={()=> navigation.dispatch(CommonActions.navigate({name: 'Registrer'}))}>
           <Text style={styles.textRedirect}>No tienes cuenta? Registrate ahora</Text>

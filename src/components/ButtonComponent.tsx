@@ -6,12 +6,12 @@ import { SECONDARY_COLOR, TERTIARY_COLOR } from '../commons/constants'
 //componente reutulizable
 interface Props {    //recibe valores para las propiedades de los componentes
     text: string;
-    handleLogin: ()=> void;
+    onPress: ()=> void;
 }
-export const ButtonComponent = ({ text, handleLogin }: Props) => {
+export const ButtonComponent = ({ text, onPress }: Props) => {
     return (
         <TouchableOpacity style={{ ...styles.button }}
-            onPress={handleLogin}>
+            onPress={onPress}>
             <Text style={{ ...styles.buttonText }}>
                 {text}
             </Text>

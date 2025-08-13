@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StatusBar, Text, View } from 'react-native'
 import { PRIMARY_COLOR } from '../../commons/constants'
 import { TitleComponent } from '../../components/TitleComponent'
@@ -16,6 +16,15 @@ export interface Product {
     pathImage: string;
 }
 
+//interface para el arreglo carrito
+interface Cart{
+    id: number;
+    name: string;
+    price: number;
+    quantity: number;
+    total: number;
+
+}
 
 export const HomeScreen = () => {
     //arreglo con la lista de usuarios
@@ -32,14 +41,54 @@ export const HomeScreen = () => {
         { id: 10, name: 'Funda de sal', price: 0.50, stock: 8, pathImage: 'https://www.supermercadosantamaria.com/documents/10180/10504/87990_M.jpg' }
     ];
 
+    //hook useState para manejar el estado de los productos
+    const [listProducts, setListProducts] = useState<Product[]>(products); //arreglo de productos
+
+    //hook useState para controlar los productos del carrito
+    const [cart, setCart] = useState<Cart[]>([]); //arreglo con los productos seleccionados
+
+    //funcion para actualizar el stock
+    const updateStock = (id: number, quantity: number)=>{
+        const updateProducts = listProducts.map(product => product.id == id
+            ? {...product, stock: product.stock - quantity}
+            : product);
+            //actualizar producto en el arreglo
+            setListProducts(updateProducts);
+            //llamar la funcion para añadir al carrito
+            addProduct(id, quantity);
+    }
+
+    //funcion para agregar los productos al carrito
+    const addProduct = (id: number, quantity: number): void =>{
+        const product = listProducts.find(product => product.id == id);
+        
+        //Validar si existe el producto
+        if (!product) {
+            return;
+        }
+
+        //Crear producto para el carrito
+        const newProductCart: Cart={
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            quantity: quantity,
+            total: product.price * quantity
+        }
+
+        //Añadir en el carrito
+        setCart([...cart, newProductCart]);
+        console.log(cart);
+    }
+
     return (
             <View>
                 <StatusBar backgroundColor={PRIMARY_COLOR} />
                 <TitleComponent title='Productos' />
                 <BodyComponent>
                     <FlatList
-                        data={products}
-                        renderItem={({ item }) => <CardProduct item={item} />}
+                        data={listProducts}
+                        renderItem={({ item }) => <CardProduct item={item} updateStock={updateStock}/>}
                         keyExtractor={item => item.id.toString()}
                     />
                 </BodyComponent>

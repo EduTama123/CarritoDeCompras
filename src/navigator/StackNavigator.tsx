@@ -32,6 +32,7 @@ export const StackNavigator = () => {
     }
     return (
         <Stack.Navigator
+        initialRouteName='Home'
             screenOptions={{
                 cardStyle: {
                     backgroundColor: PRIMARY_COLOR,

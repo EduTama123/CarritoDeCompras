@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Image, Modal, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native'
+import { Alert, Image, Modal, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native'
 import { styles } from '../../../theme/appTheme'
 import { Product } from '../HomeScreen';
 import Icon from 'react-native-vector-icons/MaterialIcons';

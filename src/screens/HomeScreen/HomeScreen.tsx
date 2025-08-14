@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { StatusBar, Text, View } from 'react-native'
-import { PRIMARY_COLOR } from '../../commons/constants'
+import { StatusBar, StyleSheet, Text, View } from 'react-native'
+import { PRIMARY_COLOR, SECONDARY_COLOR } from '../../commons/constants'
 import { TitleComponent } from '../../components/TitleComponent'
 import { BodyComponent } from '../../components/BodyComponent'
 import { FlatList } from 'react-native'
 import { CardProduct } from './components/CardProduct'
-import { ModalProduct } from './components/ModalProduct'
+import Icon from 'react-native-vector-icons/MaterialIcons'
+import { ModalCart } from './components/ModalCart'
 
 //interface para el arreglo de objetos de productos
 export interface Product {
@@ -17,7 +18,7 @@ export interface Product {
 }
 
 //interface para el arreglo carrito
-interface Cart{
+export interface Cart {
     id: number;
     name: string;
     price: number;
@@ -47,28 +48,32 @@ export const HomeScreen = () => {
     //hook useState para controlar los productos del carrito
     const [cart, setCart] = useState<Cart[]>([]); //arreglo con los productos seleccionados
 
+    //hook useState para manejar el estado del modal
+    const [showModal, setShowModal] = useState<boolean>(false);
+
     //funcion para actualizar el stock
-    const updateStock = (id: number, quantity: number)=>{
+    const updateStock = (id: number, quantity: number) => {
         const updateProducts = listProducts.map(product => product.id == id
-            ? {...product, stock: product.stock - quantity}
+            ? { ...product, stock: product.stock - quantity }
             : product);
-            //actualizar producto en el arreglo
-            setListProducts(updateProducts);
-            //llamar la funcion para añadir al carrito
-            addProduct(id, quantity);
+        //actualizar producto en el arreglo
+        setListProducts(updateProducts);
+        //llamar la funcion para añadir al carrito
+        addProduct(id, quantity);
     }
 
     //funcion para agregar los productos al carrito
-    const addProduct = (id: number, quantity: number): void =>{
+    const addProduct = (id: number, quantity: number): void => {
         const product = listProducts.find(product => product.id == id);
-        
+
+
         //Validar si existe el producto
         if (!product) {
             return;
         }
 
         //Crear producto para el carrito
-        const newProductCart: Cart={
+        const newProductCart: Cart = {
             id: product.id,
             name: product.name,
             price: product.price,
@@ -82,17 +87,44 @@ export const HomeScreen = () => {
     }
 
     return (
-            <View>
-                <StatusBar backgroundColor={PRIMARY_COLOR} />
+        <View>
+            <StatusBar backgroundColor={PRIMARY_COLOR} />
+            <View style={styles.headerHome}>
                 <TitleComponent title='Productos' />
-                <BodyComponent>
-                    <FlatList
-                        data={listProducts}
-                        renderItem={({ item }) => <CardProduct item={item} updateStock={updateStock}/>}
-                        keyExtractor={item => item.id.toString()}
-                    />
-                </BodyComponent>
+                <View style={styles.continerIcon}>
+                    <Text style={styles.textIconCart}>{cart.length}</Text>
+                    <Icon name='shopping-cart' size={30} color={SECONDARY_COLOR} onPress={()=> setShowModal(!showModal)}/>
+                </View>
             </View>
-            
+            <BodyComponent>
+                <FlatList
+                    data={listProducts}
+                    renderItem={({ item }) => <CardProduct item={item} updateStock={updateStock} />}
+                    keyExtractor={item => item.id.toString()}
+                />
+            </BodyComponent>
+            <ModalCart visible={showModal} setShowModal={()=> setShowModal(!showModal)} cart={cart}/>
+        </View>
+
     )
 }
+
+const styles = StyleSheet.create({
+    headerHome: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    continerIcon: {
+        flex: 1,
+        alignItems: 'flex-end',
+        paddingHorizontal: 25
+    },
+    textIconCart: {
+        backgroundColor: SECONDARY_COLOR,
+        paddingHorizontal: 5,
+        borderRadius: 25,
+        fontWeight: 'bold',
+        fontSize: 13,
+        marginRight: 6
+    }
+})
